@@ -1,0 +1,11 @@
+{
+  "facilities": [
+    { "name": "Karamoja Regional Referral (HC3)", "level": "HC3", "district": "Karamoja" },
+    { "name": "Kibuku Health Center II (HC2)", "level": "HC2", "district": "Kibuku" },
+    { "name": "Kira Health Center II (HC2)", "level": "HC2", "district": "Wakiso" }
+  ],
+  "vhts": [
+    { "name": "VHT Sarah", "phone": "+256700000001", "village": "Karamoja Zone A", "facility_name": "Karamoja Regional Referral (HC3)" },
+    { "name": "VHT John", "phone": "+256700000002", "village": "Kira Zone B", "facility_name": "Kira Health Center II (HC2)" }
+  ]
+}
