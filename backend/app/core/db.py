@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase
 from app.core.config import settings
 
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase): 
     pass
 
 

@@ -1,11 +1,21 @@
 {
   "facilities": [
-    { "name": "Karamoja Regional Referral (HC3)", "level": "HC3", "district": "Karamoja" },
-    { "name": "Kibuku Health Center II (HC2)", "level": "HC2", "district": "Kibuku" },
-    { "name": "Kira Health Center II (HC2)", "level": "HC2", "district": "Wakiso" }
+    { "name": "Kiryandongo Regional Referral (HC3)", "level": "HC3", "district": "Kiryandongo" },
+    { "name": "Kiryandongo Health Center II (HC2)", "level": "HC2", "district": "Kiryandongo" },
+
+    {"name": "Kira Health Center III (HC3)", "level": "HC3", "district": "Wakiso" },
+    { "name": "Kira Health Center II (HC2)", "level": "HC2", "district": "Wakiso" },
+
+    {"name": "Karamoja Regional Referral (HC3)", "level": "HC3", "district": "Karamoja"  },
+    { "name": "Karamoja Health Center II (HC2)", "level": "HC2", "district": "Karamoja" }
   ],
   "vhts": [
-    { "name": "VHT Sarah", "phone": "+256700000001", "village": "Karamoja Zone A", "facility_name": "Karamoja Regional Referral (HC3)" },
-    { "name": "VHT John", "phone": "+256700000002", "village": "Kira Zone B", "facility_name": "Kira Health Center II (HC2)" }
+    { "name": "VHT Sarah", "phone": "+256700000001", "village": "Kiryandongo Zone A", "facility_name": "Kiryandongo Health Center II (HC2)" },
+    { "name": "VHT John", "phone": "+256700000002", "village": "Kiryandongo Zone A", "facility_name": "Kiryandongo Health Center II (HC2)" },
+    { "name": "VHT Grace", "phone": "+256700000003", "village": "Kiryandongo Village B", "facility_name": "Kiryandongo Health Center II (HC2)" },
+    { "name": "VHT Peter", "phone": "+256700000004", "village": "Kiryandongo Zone A", "facility_name": "Kiryandongo Health Center II (HC2)" },
+    { "name": "VHT Mary", "phone": "+256700000005", "village": "Kiryandongo Zone A", "facility_name": "Kiryandongo Health Center II (HC2)" },
+    { "name": "VHT James", "phone": "+256700000006", "village": "Kiryandongo Zone B", "facility_name": "Kiryandongo Health Center II (HC2)" }
   ]
 }
+

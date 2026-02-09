@@ -8,7 +8,16 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/usr/src/app
+      # Persistent SQLite DB lives here (named volume)
+      - backend_db:/usr/src/app/data
+    environment:
+      # Absolute path INSIDE container
+      - DATABASE_URL=sqlite:////usr/src/app/data/app.db
+
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  backend_db:
 
   # web:
   #   build:

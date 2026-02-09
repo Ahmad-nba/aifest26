@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional, Literal
+from datetime import datetime
 
 
 # ---------- Facilities ----------
@@ -60,3 +61,22 @@ class PatientOut(BaseModel):
     missed_anc_count: int
 
     model_config = {"from_attributes": True}
+
+
+class CheckInCreate(BaseModel):
+    patient_id: int
+    facility_id: int
+    source: str
+    initial_complaint: Optional[str] = None
+
+
+class CheckInResponse(BaseModel):
+    id: str
+    patient_id: int
+    facility_id: int
+    source: str
+    status: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

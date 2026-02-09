@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.db import Base, engine, SessionLocal
 from app.api.routes_facilities import router as facilities_router
 from app.api.routes_patients import router as patients_router
+from app.api.routes_agent import router as agent_router
+from app.api.routes_checkin import router as checkin_router
 from app.seed.seed_data import seed_if_empty
 
 
@@ -32,10 +34,12 @@ def on_startup():
         db.close()
 
 
-@app.get("/health")
+@app.get("/")
 def health():
     return {"status": "ok"}
 
 
 app.include_router(facilities_router)
 app.include_router(patients_router)
+app.include_router(agent_router)
+app.include_router(checkin_router)  # check-in router

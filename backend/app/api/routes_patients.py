@@ -10,7 +10,7 @@ router = APIRouter(prefix="/patients", tags=["patients"])
 
 
 @router.post("", response_model=PatientOut)
-def create_patient(payload: PatientCreate, db: Session = Depends(get_db)):
+def create_patient(payload: PatientCreate, db: Session = Depends(get_db)) :
     # Validate facility exists
     facility = db.get(Facility, payload.facility_id)
     if not facility:
@@ -94,3 +94,5 @@ def update_patient(patient_id: int, payload: PatientUpdate, db: Session = Depend
     db.commit()
     db.refresh(patient)
     return patient
+
+# patient raise concern (checkin) endpoint is in routes_checkins.py since it involves both patient and checkin data

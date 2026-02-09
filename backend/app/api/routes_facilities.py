@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 from app.core.db import get_db
-from app.core.models import Facility
-from app.core.schemas import FacilityOut
+from app.core.models import Facility, VHT
+from app.core.schemas import FacilityOut, VHTOut
 
 router = APIRouter(prefix="/facilities", tags=["facilities"])
 
@@ -27,3 +27,16 @@ def get_facility(facility_id: int, db: Session = Depends(get_db)):
     if not facility:
         raise HTTPException(status_code=404, detail="Facility not found")
     return facility
+
+
+# 🔽 NEW: list VHTs for a given facility
+@router.get("/{facility_id}/vhts", response_model=list[VHTOut])
+def list_facility_vhts(facility_id: int, db: Session = Depends(get_db)):
+    # Optional safety check: ensure facility exists
+    facility = db.get(Facility, facility_id)
+    if not facility:
+        raise HTTPException(status_code=404, detail="Facility not found")
+
+    stmt = select(VHT).where(VHT.facility_id == facility_id)
+    vhts = db.execute(stmt).scalars().all()
+    return vhts

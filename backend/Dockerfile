@@ -1,17 +1,43 @@
+# FROM python:3.11-slim
+
+# WORKDIR /usr/src/app
+
+# ENV PYTHONDONTWRITEBYTECODE=1
+# ENV PYTHONUNBUFFERED=1
+
+# RUN apt-get update && apt-get install -y \
+#     build-essential \
+#     && rm -rf /var/lib/apt/lists/*
+
+# COPY requirements.txt .
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY app ./usr/src/app
+
+# EXPOSE 8000
+
 FROM python:3.11-slim
 
 WORKDIR /usr/src/app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/usr/src/app
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./usr/src/app
+# Copy the app package into /usr/src/app/app
+COPY app ./app
+
+# Ensure data dir exists for SQLite
+RUN mkdir -p /usr/src/app/data
 
 EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
