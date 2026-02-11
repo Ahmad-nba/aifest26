@@ -5,3 +5,8 @@ SQLAlchemy==2.0.46
 pydantic-settings==2.12.0
 python-dotenv==1.0.1
 langgraph
+langchain-google-genai
+# dotenv is used to load environment variables from .env file, which includes the GOOGLE_API_KEY. Make sure to set the GOOGLE_API_KEY in your .env file for the application to work properly.
+python-dotenv
+# list models vailable in google genai
+google-ai-generativelanguage-0.6.15

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 from app.core.db import Base, engine, SessionLocal
 from app.api.routes_facilities import router as facilities_router
 from app.api.routes_patients import router as patients_router
