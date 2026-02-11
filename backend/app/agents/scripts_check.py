@@ -3,17 +3,17 @@
     run : python scripts_check.py
 """
 
-import os
-from dotenv import load_dotenv
-import google.generativeai as genai
+# import os
+# from dotenv import load_dotenv
+# import google.generativeai as genai
 
 
-load_dotenv()
+# load_dotenv()
 
-# This WORKS despite Pylance warnings
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+# # This WORKS despite Pylance warnings
+# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-models = genai.list_models()
+# models = genai.list_models()
 
-for model in models:
-    print(model.name, "->", model.supported_generation_methods)
+# for model in models:
+#     print(model.name, "->", model.supported_generation_methods)

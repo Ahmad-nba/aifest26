@@ -12,52 +12,53 @@ from typing import cast
 from langchain_google_genai import ChatGoogleGenerativeAI
 from app.agents.planner.schemas import Plan
 from app.agents.prompts import get_planner_prompt
+from app.agents.policies import validate_plan  # <-- import policies
 
-
-# declare api key
-api_key = os.getenv("GOOGLE_API_KEY")
-
-# 1. Initialize LLM
+# LLM Initialization
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash", temperature=0, max_retries=2, api_key=api_key
+    model="gemini-2.5-flash",
+    temperature=0,
+    max_retries=2,
+    api_key=os.getenv("GOOGLE_API_KEY")
 )
 
-# 2. Bind the Schema
-# We tell the LLM to output matching the 'Plan' schema
 structured_planner = llm.with_structured_output(Plan)
-
-# 3. Create the Chain
 planner_chain = get_planner_prompt() | structured_planner
-
 
 def plan_checkin(checkin: dict, patient: dict) -> dict:
     """
-    Orchestrates the planning process using the LLM.
+    Full planning cycle:
+    1. Planner generates proposed plan
+    2. Policies validate and potentially modify
+    3. Return validated plan
     """
-
-    # 1. Format context for the prompt
     patient_str = f"Name: {patient.get('name')}, Village: {patient.get('village')}, ID: {patient.get('id')}"
     checkin_str = f"Source: {checkin.get('source')}, Complaint: {checkin.get('initial_complaint')}"
 
-    # 2. Invoke the LLM
     try:
-        # PYLANCE FIX: We use cast() to tell the type checker
-        # "Trust me, this returns a Plan object"
-        response = planner_chain.invoke(
-            {"patient_context": patient_str, "checkin_context": checkin_str}
-        )
+        # 1. Planner proposes plan
+        response = planner_chain.invoke({
+            "patient_context": patient_str,
+            "checkin_context": checkin_str
+        })
+        plan_result = cast(Plan, response).model_dump()
 
-        plan_result = cast(Plan, response)
+        # 2. Policies validate the plan
+        policy_result = validate_plan(plan_result)
 
-        # 3. Return as dictionary
-        return plan_result.model_dump()
+        # 3. Return final plan
+        return policy_result
 
     except Exception as e:
         print(f"Planner LLM Error: {e}")
-        # Fallback for safety
         return {
-            "intent": "ESCALATE",
-            "reason": f"System Error - Planner Failed: {str(e)}",
-            "priority": "high",
-            "requires_human": True,
+            "approved": False,
+            "reason": f"Planner failed: {str(e)}",
+            "modified_plan": {
+                "intent": "ESCALATE",
+                "reason": "System fallback",
+                "priority": "high",
+                "requires_human": True,
+                "tools": []
+            }
         }
